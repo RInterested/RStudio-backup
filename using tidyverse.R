@@ -6,19 +6,24 @@ is_tibble(df)
 str(df)
 colnames(df)
 
-dat = df %>% select(wt,cyl,mpg) %>% 
+dat = df %>% rownames_to_column("model") %>%
+              select(model,wt,cyl,mpg) %>% 
               mutate(cyl = as.character(cyl)) %>%
-              filter(cyl==4) %>%
+              filter(cyl == 4) %>%
               mutate(wt = wt*100) %>%
-              mutate(CPW = mpg/wt)
+              mutate(CPW = mpg/wt) %>%
+              arrange(desc(mpg))
 dat
 is.tibble(dat)
 
-d = mtcars %>% select(wt,cyl,mpg) %>% 
+
+d = mtcars %>% rownames_to_column("model") %>%
+                select(model,wt,cyl,mpg) %>% 
                 mutate(cyl = as.character(cyl)) %>%
                 filter(cyl==4)%>%
                 mutate(wt = wt*100) %>%
-                mutate(CPW = mpg/wt)
+                mutate(CPW = mpg/wt) %>%
+                arrange(desc(mpg))
 
 d
 is.tibble(d)
